@@ -60,7 +60,7 @@ const BrowseByStyleSection = () => {
           <div
             key={style.id}
             onClick={() => navigate(`/shop?style=${style.category}`)}
-            className="group relative cursor-pointer overflow-hidden rounded-2xl aspect-[4/5]"
+            className="group relative cursor-pointer overflow-hidden rounded-2xl aspect-4/5"
           >
             {/* Image */}
             <img
@@ -70,7 +70,7 @@ const BrowseByStyleSection = () => {
             />
 
             {/* Overlay gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition" />
 
             {/* Content */}
             <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
