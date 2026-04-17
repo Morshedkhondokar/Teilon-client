@@ -30,6 +30,7 @@ const ProductCard = ({ product }) => {
             <span className="absolute top-3 left-3 bg-red-500 text-white text-xs font-medium px-2.5 py-1 rounded-full">
               -{discount}%
             </span>
+            
           )}
         </div>
 
