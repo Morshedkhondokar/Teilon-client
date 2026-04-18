@@ -1,19 +1,23 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ProductCard from "../ProductCard";
-
+import useProducts from "../../hooks/useProducts";
 
 const NewArrivalsSection = () => {
-    const [products, setProducts] = useState([]);
+  const { data: products = [], isLoading } = useProducts();
   const [showAll, setShowAll] = useState(false);
+
+  if (isLoading) {
+    return (
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="text-center text-slate-500">
+          Loading new arrivals...
+        </div>
+      </section>
+    );
+  }
 
   const newArrivals = products.filter((p) => p.isNew);
   const displayedProducts = showAll ? newArrivals : newArrivals.slice(0, 4);
-
-  useEffect(() => {
-  fetch("/data/products.json")
-    .then((res) => res.json())
-    .then((data) => setProducts(data));
-}, []);
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -28,7 +32,10 @@ const NewArrivalsSection = () => {
       {/* ───── Product Grid ───── */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
         {displayedProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard
+            key={product.id}
+            product={product}
+          />
         ))}
       </div>
 

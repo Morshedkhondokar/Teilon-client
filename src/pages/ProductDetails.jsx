@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router";
+import useProducts from "../hooks/useProducts";
 
 import Breadcrumb from "../components/product/Breadcrumb";
 import ImageGallery from "../components/product/ImageGallery";
@@ -15,30 +16,16 @@ import ProductTabs from "../components/product/productTabs/ProductTabs";
 
 const ProductDetails = () => {
   const { slug } = useParams();
-  const [product, setProduct] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const { data: products = [], isLoading, error } = useProducts();
+  const product = useMemo(
+    () => products.find((p) => p.slug === slug),
+    [products, slug],
+  );
 
-  // Fetch product
-  useEffect(() => {
-    fetch("/data/products.json")
-      .then((res) => res.json())
-      .then((data) => setProduct(data.find((p) => p.slug === slug)))
-      .catch((err) => console.log(err));
-  }, [slug]);
-
-  // Reset selections when product changes
-  useEffect(() => {
-    if (product) {
-      setSelectedColor(product.colors[0] || null);
-      setSelectedSize(product.sizes.find((s) => s.stock > 0)?.size || null);
-      setQuantity(1);
-    }
-  }, [product]);
-
-  // Loading state
-  if (!product) {
+  if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-stone-50">
         <div className="flex flex-col items-center gap-3">
@@ -47,6 +34,22 @@ const ProductDetails = () => {
             Loading product...
           </p>
         </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-stone-50">
+        <p className="text-sm text-slate-500">Failed to load the product.</p>
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-stone-50">
+        <p className="text-sm text-slate-500">Product not found.</p>
       </div>
     );
   }
