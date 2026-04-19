@@ -36,9 +36,9 @@ const TopSellingSection = () => {
             className="relative"
           >
             {/* ───── Rank Badge ───── */}
-            <div className="absolute top-2 left-2 z-10 flex items-center gap-1 bg-black text-white text-xs font-bold px-2 py-1 rounded-full shadow">
+            {/* <div className="absolute top-2 left-2 z-10 flex items-center gap-1 bg-black text-white text-xs font-bold px-2 py-1 rounded-full shadow">
               <span className="text-yellow-400">★</span>#{index + 1}
-            </div>
+            </div> */}
 
             {/* ───── Discount Badge ───── */}
             {product.discount && (

@@ -60,6 +60,7 @@ const ProductDetails = () => {
 
   const handleAddToCart = () => {
     if (!selectedSize) return alert("Please select a size");
+    if (!selectedColor) return alert("Please select a color");
     console.log("Add to cart:", {
       product: product.name,
       color: selectedColor,
